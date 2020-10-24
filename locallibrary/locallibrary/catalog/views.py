@@ -22,3 +22,14 @@ def index(request):
     }
     return render(request, 'catalog/index.html', context=context)
 # Create your views here.
+
+def books(request):
+    book_list = Book.objects.all()
+    return render(request, 'catalog/books.html', {
+        'book_list': book_list
+    })
+def book_details(request, id):
+    book = Book.objects.get(id=id)
+    return render(request, 'catalog/book_detail.html', {
+        'book': book
+    })

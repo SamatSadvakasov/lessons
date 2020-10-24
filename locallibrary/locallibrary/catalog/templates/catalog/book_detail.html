@@ -1,0 +1,11 @@
+{% extends "catalog/base_generic.html" %}
+{% block title %}<title>Book Detail</title>{% endblock %}
+{% block content %}
+    <h1>Information about the book</h2>
+  <ul>
+        <li>BOOK ID: {{book.id}}</li>
+        <li>BOOK TITLE: {{book.title}}</li>
+        <li>BOOK AUTHOR: {{book.author.last_name}} {{book.author.first_name}}</li>
+  </ul>
+
+{% endblock %}
