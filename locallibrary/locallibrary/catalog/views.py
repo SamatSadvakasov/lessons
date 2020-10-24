@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from catalog.models import Book, Author, BookInstance
 #test
+#homework
 def index(request):
     """View function for home page of site."""
 
