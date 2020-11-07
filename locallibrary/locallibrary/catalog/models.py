@@ -56,6 +56,8 @@ class Book(models.Model):
         """String for representing the Model object."""
         return self.title
 
+    class Meta:
+        ordering = ['id']
 
 import uuid  # Required for unique book instances
 from datetime import date
@@ -118,3 +120,5 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return '{0}, {1}'.format(self.last_name, self.first_name)
+    class Meta:
+        ordering = ['last_name']
