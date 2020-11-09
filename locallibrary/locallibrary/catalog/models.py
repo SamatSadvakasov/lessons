@@ -1,9 +1,10 @@
 from django.db import models
 
 # Create your models here.
-
+import uuid  # Required for unique book instances
+from datetime import date
 from django.urls import reverse  # To generate URLS by reversing URL patterns
-
+from django.contrib.auth.models import User
 
 class Genre(models.Model):
     """Model representing a book genre (e.g. Science Fiction, Non Fiction)."""
@@ -59,10 +60,6 @@ class Book(models.Model):
     class Meta:
         ordering = ['id']
 
-import uuid  # Required for unique book instances
-from datetime import date
-
-from django.contrib.auth.models import User  # Required to assign User as a borrower
 
 
 class BookInstance(models.Model):
