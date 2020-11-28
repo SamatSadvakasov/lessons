@@ -72,7 +72,7 @@ def renew_book_librarian(request, pk):
 
     return render(request, 'catalog/book_renew_librarian.html', context)
 
-#test
+#testlkdajsflkasdjflkajsdflkjasdlkfjlaskdjfaskdl;fja;dskfj;asdklfja;sdkfj;daskfja;sdlkjfadksljf;dsf
 #homework
 @login_required
 def index(request):
