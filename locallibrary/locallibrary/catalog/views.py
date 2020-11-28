@@ -7,10 +7,9 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from catalog.forms import RenewBookForm
-
+from catalog.filters import BookFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Author, Book
 
 class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author
@@ -110,9 +109,15 @@ def index(request):
 #         'book': book
 #     })
 
-class BookListView(LoginRequiredMixin,generic.ListView):
-    model = Book
-    paginate_by = 10
+@login_required
+def book_views(request):
+    books = Book.objects.all()
+    book_filter = BookFilter(request.GET, queryset=books)
+    return render(request, 'catalog/book_list.html', {'book_list':book_filter})
+
+# class BookListView(LoginRequiredMixin,generic.ListView):
+#     model = Book
+#     paginate_by = 10
 
 class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Book

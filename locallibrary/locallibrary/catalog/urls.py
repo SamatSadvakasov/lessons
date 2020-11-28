@@ -5,7 +5,8 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('book/', views.BookListView.as_view(), name='books'),
+    path('book/', views.book_views, name='books'),
+    #path('book_test/', views.book_views, name='books_test'),
     path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
     path('authors/', views.AuthorListView.as_view(), name='author'),
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),
