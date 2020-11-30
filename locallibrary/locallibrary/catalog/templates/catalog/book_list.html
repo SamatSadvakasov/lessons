@@ -2,13 +2,16 @@
 {% block title %}<title>Books List</title>{% endblock %}
 {% block content %}
     <h1>Book List</h1>
-
+    <form method="get">
+      {{ book_list.form.as_p }}
+      <button type="submit">Search</button>
+    </form>
     {% if book_list %}
     <ul>
       {% if perms.catalog.can_mark_returned %}
       <li><a href="{% url 'book_create' %}">Create Book</a></li>
       {% endif %}
-      {% for book in book_list %}
+      {% for book in book_list.qs %}
       <li>
         <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> ({{book.author}})
         {% if perms.catalog.can_mark_returned %}

@@ -7,10 +7,30 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from catalog.forms import RenewBookForm
-
+from catalog.filters import BookFilter
+from catalog.serializers import BookModelSerializer
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Author, Book
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import generics
+
+@api_view(['GET'])
+def book_api(request):
+    data = {'success':'ura'}
+    return Response(data)
+
+class BookAPIView(generics.ListAPIView):
+    serializer_class = BookModelSerializer
+    
+    def get_queryset(self):
+
+        queryset = Book.objects.all()
+        title = self.request.query_params.get('title', None)
+        if title is not None:
+            queryset = queryset.filter(title=title)
+        return queryset
+
 
 class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author
@@ -72,7 +92,7 @@ def renew_book_librarian(request, pk):
 
     return render(request, 'catalog/book_renew_librarian.html', context)
 
-#test
+#testlkdajsflkasdjflkajsdflkjasdlkfjlaskdjfaskdl;fja;dskfj;asdklfja;sdkfj;daskfja;sdlkjfadksljf;dsf
 #homework
 @login_required
 def index(request):
@@ -110,9 +130,15 @@ def index(request):
 #         'book': book
 #     })
 
-class BookListView(LoginRequiredMixin,generic.ListView):
-    model = Book
-    paginate_by = 10
+@login_required
+def book_views(request):
+    books = Book.objects.all()
+    book_filter = BookFilter(request.GET, queryset=books)
+    return render(request, 'catalog/book_list.html', {'book_list':book_filter})
+
+# class BookListView(LoginRequiredMixin,generic.ListView):
+#     model = Book
+#     paginate_by = 10
 
 class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Book
