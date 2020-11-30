@@ -8,8 +8,29 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from catalog.forms import RenewBookForm
 from catalog.filters import BookFilter
+from catalog.serializers import BookModelSerializer
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import generics
+
+@api_view(['GET'])
+def book_api(request):
+    data = {'success':'ura'}
+    return Response(data)
+
+class BookAPIView(generics.ListAPIView):
+    serializer_class = BookModelSerializer
+    
+    def get_queryset(self):
+
+        queryset = Book.objects.all()
+        title = self.request.query_params.get('title', None)
+        if title is not None:
+            queryset = queryset.filter(title=title)
+        return queryset
+
 
 class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author

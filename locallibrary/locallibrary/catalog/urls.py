@@ -5,6 +5,8 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('api/', views.book_api),
+    path('book_api/', views.BookAPIView.as_view()),
     path('book/', views.book_views, name='books'),
     #path('book_test/', views.book_views, name='books_test'),
     path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
